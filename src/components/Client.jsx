@@ -1,7 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Client = ({ client }) => {
     const { name, company, email, phone, comments, id } = client;
+
+    const navigate = useNavigate();
+
     return (
         <tr className="border-b hover:bg-gray-50">
             <td className="p-3">{name}</td>
@@ -21,9 +25,25 @@ const Client = ({ client }) => {
             </td>
             <td className="p-3">{company}</td>
             <td className="p-3">
-                <button type="button" className="block w-full mb-2 bg-orange-400 p-1 rounded font-semibold hover:bg-orange-200">Ver</button>
-                <button type="button" className="block w-full mb-2 bg-cyan-400 p-1 rounded font-semibold hover:bg-cyan-200">Editar</button>
-                <button type="button" className="block w-full bg-red-600 p-1 rounded font-semibold hover:bg-red-400">Eliminar</button>
+                <button
+                    type="button"
+                    className="block w-full mb-2 bg-orange-400 p-1 rounded font-semibold hover:bg-orange-200"
+                    onClick={() => navigate(`/clients/${id}`)}
+                >
+                    Ver
+                </button>
+                <button
+                    type="button"
+                    className="block w-full mb-2 bg-cyan-400 p-1 rounded font-semibold hover:bg-cyan-200"
+                >
+                    Editar
+                </button>
+                <button
+                    type="button"
+                    className="block w-full bg-red-600 p-1 rounded font-semibold hover:bg-red-400"
+                >
+                    Eliminar
+                </button>
             </td>
         </tr>
     );

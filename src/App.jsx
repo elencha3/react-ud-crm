@@ -4,6 +4,7 @@ import Layout from "./layout/Layout";
 import Home from "./pages/Home";
 import NewClient from "./pages/NewClient";
 import EditClient from "./pages/EditClient";
+import ViewClient from "./pages/ViewClient";
 
 function App() {
     const [count, setCount] = useState(0);
@@ -15,6 +16,7 @@ function App() {
                     <Route index element={<Home />} />
                     <Route path="new" element={<NewClient />} />
                     <Route path="edit/:id" element={<EditClient />} />
+                    <Route path=":id" element={<ViewClient />} />
                 </Route>
             </Routes>
         </BrowserRouter>
