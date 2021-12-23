@@ -24,7 +24,21 @@ const FormNewClient = () => {
         comments: "",
     });
 
-    const handleSubmit = (values) => {};
+    const handleSubmit = async (values) => {
+        try {
+            const url = "http://localhost:4000/clients";
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify(values),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            console.log(response);
+            const result = await response.json();
+            console.log(result);
+        } catch (error) {}
+    };
 
     return (
         <div className="mt-10 px-5 py-10 rounded-md bg-orange-200 shadow-md md:w-3/4 mx-auto">
@@ -46,7 +60,6 @@ const FormNewClient = () => {
                 validationSchema={newClientSchema}
             >
                 {({ errors, touched }) => {
-                    console.log(errors);
                     return (
                         <Form className="mt-10">
                             <div className="mb-4">
