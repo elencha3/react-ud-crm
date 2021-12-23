@@ -1,12 +1,28 @@
 {
-    "clients": [
+  "clients": [
     {
-        "name": "Esther Leñador",
-        "company": "fox",
-        "email": "e.lenadorc@hotmail.com",
-        "phone": "21312321",
-        "comments": "fwefwrwer",
-        "id": 1
+      "name": "Esther Leñador",
+      "company": "fox",
+      "email": "e.lenadorc@hotmail.com",
+      "phone": "21312321",
+      "comments": "fwefwrwer",
+      "id": 1
+    },
+    {
+      "name": "Manuel Rojo",
+      "company": "Fox in a Box",
+      "email": "correo@correo.com",
+      "phone": "21312321",
+      "comments": "Cliente premium",
+      "id": 2
+    },
+    {
+      "name": "Marta",
+      "company": "Bankia",
+      "email": "correo@correo.com",
+      "phone": "2342342",
+      "comments": "Lo que sea",
+      "id": 3
     }
-]
+  ]
 }

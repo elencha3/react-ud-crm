@@ -1,9 +1,12 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
+import { useNavigate } from "react-router-dom";
 import Alert from "./Alert";
 import * as Yup from "yup";
 
 const FormNewClient = () => {
+    const navigate = useNavigate();
+
     // Validación del formulario. creamos dentr del componente Formik validationSchema y le
     // pasamos una función. Yup.object().shape() y definimos validaciones para cada campo.
     const newClientSchema = Yup.object().shape({
@@ -34,9 +37,10 @@ const FormNewClient = () => {
                     "Content-Type": "application/json",
                 },
             });
-            console.log(response);
+
             const result = await response.json();
-            console.log(result);
+
+            navigate("/clients");
         } catch (error) {}
     };
 
@@ -54,8 +58,9 @@ const FormNewClient = () => {
                     phone: "",
                     comments: "",
                 }}
-                onSubmit={(values) => {
-                    handleSubmit(values);
+                onSubmit={async (values, { resetForm }) => {
+                    await handleSubmit(values);
+                    resetForm();
                 }}
                 validationSchema={newClientSchema}
             >
@@ -154,7 +159,7 @@ const FormNewClient = () => {
                             <input
                                 type="submit"
                                 value="Agregar cliente"
-                                className="mt-5 w-full bg-orange-500 p-3 text-gray-800 rounded font-bold text-lg"
+                                className="mt-5 w-full bg-orange-500 p-3 text-gray-800 rounded font-bold text-lg cursor-pointer"
                             />
                         </Form>
                     );
