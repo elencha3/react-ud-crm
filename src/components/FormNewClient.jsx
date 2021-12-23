@@ -2,9 +2,10 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import { useNavigate } from "react-router-dom";
 import Alert from "./Alert";
+import Spinner from "./Spinner";
 import * as Yup from "yup";
 
-const FormNewClient = () => {
+const FormNewClient = ({ client, loading, setLoading }) => {
     const navigate = useNavigate();
 
     // Validación del formulario. creamos dentr del componente Formik validationSchema y le
@@ -29,35 +30,53 @@ const FormNewClient = () => {
 
     const handleSubmit = async (values) => {
         try {
-            const url = "http://localhost:4000/clients";
-            const response = await fetch(url, {
-                method: "POST",
-                body: JSON.stringify(values),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+            let response;
+            if (client.id) {
+                // Editando un registro
+                const url = `http://localhost:4000/clients/${client.id}`;
+                response = await fetch(url, {
+                    method: "PUT",
+                    body: JSON.stringify(values),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+            } else {
+                // Nuevo Registro
+                const url = "http://localhost:4000/clients";
+                response = await fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify(values),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+            }
 
-            const result = await response.json();
-
+            await response.json();
             navigate("/clients");
-        } catch (error) {}
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    return (
+    return loading ? (
+        <Spinner />
+    ) : (
         <div className="mt-10 px-5 py-10 rounded-md bg-orange-200 shadow-md md:w-3/4 mx-auto">
             <h1 className="text-gray-800 font-bold text-xl text-center uppercase">
-                Agregar nuevo cliente
+                {client?.name ? "Editar cliente" : "Agregar nuevo cliente"}
             </h1>
 
             <Formik
                 initialValues={{
-                    name: "",
-                    company: "",
-                    email: "",
-                    phone: "",
-                    comments: "",
+                    name: client?.name ?? "",
+                    company: client?.company ?? "",
+                    email: client?.email ?? "",
+                    phone: client?.phone ?? "",
+                    comments: client?.comments ?? "",
                 }}
+                enableReinitialize={true}
                 onSubmit={async (values, { resetForm }) => {
                     await handleSubmit(values);
                     resetForm();
@@ -158,7 +177,11 @@ const FormNewClient = () => {
 
                             <input
                                 type="submit"
-                                value="Agregar cliente"
+                                value={
+                                    client?.name
+                                        ? "Editar cliente"
+                                        : "Agregar nuevo cliente"
+                                }
                                 className="mt-5 w-full bg-orange-500 p-3 text-gray-800 rounded font-bold text-lg cursor-pointer"
                             />
                         </Form>
@@ -169,4 +192,8 @@ const FormNewClient = () => {
     );
 };
 
+FormNewClient.defaultProps = {
+    client: {},
+    loading: false,
+};
 export default FormNewClient;
