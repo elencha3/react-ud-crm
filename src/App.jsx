@@ -7,7 +7,8 @@ import EditClient from "./pages/EditClient";
 import ViewClient from "./pages/ViewClient";
 
 function App() {
-    const [count, setCount] = useState(0);
+    
+    
 
     return (
         <BrowserRouter>
